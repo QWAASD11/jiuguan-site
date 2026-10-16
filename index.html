@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>半醉酒馆 · 有酒有故事 | 中式酒馆</title>
+<meta name="description" content="半醉酒馆 —— 白酒、红酒、精酿、洋酒、果酒，按杯按瓶都有。约上三五好友，喝一杯讲讲心里话。">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo">
+      <span class="logo-mark">酒</span>
+      <span class="logo-text"><b>半醉酒馆</b><i>有酒 · 有故事</i></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#about">关于我们</a>
+      <a href="#wines">酒品</a>
+      <a href="#price">价目</a>
+      <a href="#reviews">好评</a>
+      <a href="#order">预订</a>
+      <a href="#service">客服</a>
+      <a href="#location">到店</a>
+    </nav>
+    <div class="nav-acts">
+      <button class="cart-btn" id="cartBtn" aria-label="购物车">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.3L21 7H6"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <a href="#order" class="btn-call">立即预订</a>
+    </div>
+  </div>
+</header>
+
+<!-- 主视觉 -->
+<section class="hero" id="top">
+  <div class="hero-bg"><img src="assets/img/hero.png" alt="半醉酒馆"><div class="hero-mask"></div></div>
+  <div class="hero-inner">
+    <span class="hero-tag">中 式 酒 馆 · 精 酿 洋 酒</span>
+    <h1 class="hero-h1">半醉不醉<br><em>刚好说真话</em></h1>
+    <div class="hero-rule"></div>
+    <p class="hero-p">一杯白酒，一场心事<br>三两好友，几瓶好酒，就够了</p>
+    <div class="hero-btns">
+      <a href="#wines" class="btn btn-gold">看看有什么酒</a>
+      <a href="#order" class="btn btn-ghost">立即预订座</a>
+    </div>
+    <div class="hero-stats">
+      <div><b>60<span>+</span></b><i>酒品选择</i></div>
+      <div><b>¥18<span>起</span></b><i>单杯起售</i></div>
+      <div><b>17:00<span>-02:00</span></b><i>营业时间</i></div>
+    </div>
+  </div>
+  <div class="scroll-hint"><span></span>向下浏览</div>
+</section>
+
+<!-- 关于我们 -->
+<section class="sec" id="about">
+  <div class="sec-head">
+    <span class="sec-label">关 于 我 们</span>
+    <h2 class="sec-h2">一家不赶人的酒馆</h2>
+    <p class="sec-p">
+      半醉酒馆开在街角，不大，二十来个座位。<br>
+      我们不搞花里胡哨的调酒表演，也没有震耳的音乐。<br>
+      就是老老实实备好酒，让你想喝的时候有得喝，想聊的时候有人听。
+    </p>
+  </div>
+  <div class="about-grid">
+    <div class="about-card">
+      <div class="ac-icon">🍶</div>
+      <h3>酒真价实</h3>
+      <p>白酒按香型分，红酒按产区选，精酿每周换。每一瓶都能查到出处，不掺不兑。</p>
+    </div>
+    <div class="about-card">
+      <div class="ac-icon">🪑</div>
+      <h3>坐下来慢慢喝</h3>
+      <p>不催单、不限时。你可以点一杯坐一晚上，也可以叫上朋友包场。</p>
+    </div>
+    <div class="about-card">
+      <div class="ac-icon">🤝</div>
+      <h3>老板陪你聊</h3>
+      <p>一个人来也别怕尴尬。吧台有位置，想聊就聊，不想聊就自己喝。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 酒品展示 -->
+<section class="sec sec-dark" id="wines">
+  <div class="sec-head light">
+    <span class="sec-label">酒 品 展 示</span>
+    <h2 class="sec-h2">你想喝哪一口？</h2>
+    <p class="sec-p">以下按类型分类。点一张卡片，直接跳到下单区，帮你把类型填好。</p>
+  </div>
+  <div class="style-grid" id="styleGrid"></div>
+</section>
+
+<!-- 价目表 -->
+<section class="sec" id="price">
+  <div class="sec-head">
+    <span class="sec-label">价 目 表</span>
+    <h2 class="sec-h2">按杯按瓶<br>明码标价</h2>
+    <p class="sec-p">单杯起售，想尝什么都能点一杯试试。整瓶更划算，适合几个人一起来。</p>
+  </div>
+  <div class="price-grid" id="priceGrid"></div>
+  <p class="price-note">
+    ※ 价格含服务费，不另收开瓶费<br>
+    ※ 单次消费满 ¥300 赠小食一份<br>
+    ※ 未成年人禁止饮酒，本店不向未成年人售酒
+  </p>
+</section>
+
+<!-- 客户好评 -->
+<section class="sec sec-warm" id="reviews">
+  <div class="sec-head">
+    <span class="sec-label">客 户 好 评</span>
+    <h2 class="sec-h2">来过的朋友<br>这么说的</h2>
+  </div>
+  <div class="review-grid" id="reviewGrid"></div>
+  <p class="review-note">※ 以上为到店客人真实反馈整理</p>
+</section>
+
+<!-- 预订下单 -->
+<section class="sec" id="order">
+  <div class="sec-head">
+    <span class="sec-label">预 订 座 位</span>
+    <h2 class="sec-h2">先说好<br>什么时候来</h2>
+    <p class="sec-p">周末位置紧，建议提前预订。填好信息，我会给你回电话确认。</p>
+  </div>
+  <div class="order-wrap">
+    <form class="order-form" id="orderForm">
+      <div class="of-row half">
+        <div><label>你的称呼 *</label><input type="text" id="fName" placeholder="例如：王先生" required></div>
+        <div><label>联系电话 *</label><input type="tel" id="fPhone" placeholder="方便回电确认" required></div>
+      </div>
+      <div class="of-row half">
+        <div><label>到店日期 *</label><input type="date" id="fDate" required></div>
+        <div><label>到店时间 *</label>
+          <select id="fTime" required>
+            <option value="">请选择</option>
+            <option>17:00</option><option>18:00</option><option>19:00</option>
+            <option>20:00</option><option>21:00</option><option>22:00</option>
+            <option>23:00</option><option>00:00</option>
+          </select>
+        </div>
+      </div>
+      <div class="of-row half">
+        <div><label>几位 *</label>
+          <select id="fPeople" required>
+            <option value="">请选择</option>
+            <option>1 人</option><option>2 人</option><option>3-4 人</option>
+            <option>5-8 人</option><option>8 人以上（包场）</option>
+          </select>
+        </div>
+        <div><label>想要什么酒</label>
+          <select id="fWine"></select>
+        </div>
+      </div>
+      <div class="of-row"><label>备注（选填）</label>
+        <textarea id="fNote" rows="3" placeholder="例如：要靠窗的位置 / 有人生日 / 想喝精酿推荐 / 需要无酒精饮品"></textarea></div>
+      <div class="of-summary">
+        <div><span>预订内容</span><b id="sumText">—</b></div>
+        <div class="of-total"><span>预选酒水</span><b id="sumPrice">¥0</b></div>
+      </div>
+      <button type="submit" class="btn btn-gold btn-full">提交预订</button>
+      <p class="of-tip">提交后我会尽快回电确认。也可以直接打电话。</p>
+    </form>
+
+    <aside class="order-side">
+      <div class="os-card">
+        <h3>直接联系</h3>
+        <a class="os-row" href="tel:18723308413"><span class="os-icon">📞</span><div><b>187 2330 8413</b><i>点一下直接拨</i></div></a>
+        <div class="os-row"><span class="os-icon">🕐</span><div><b>17:00 — 02:00</b><i>每天营业 · 全年无休</i></div></div>
+        <div class="os-row"><span class="os-icon">🎉</span><div><b>包场/生日</b><i>可提前沟通布置</i></div></div>
+        <div class="os-qr"><img src="assets/img/qr_tel.png" alt="扫码拨号"><span>扫码直接拨打</span></div>
+      </div>
+      <div class="os-card">
+        <h3>到店提醒</h3>
+        <ul class="os-list">
+          <li>周末建议提前 1 天预订</li>
+          <li>8 人以上请提前来电</li>
+          <li>可以自带生日蛋糕</li>
+          <li>有代驾联系方式，放心喝</li>
+          <li>不向未成年人售酒</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- 客服中心 -->
+<section class="sec sec-dark" id="service">
+  <div class="sec-head light">
+    <span class="sec-label">客 服 中 心</span>
+    <h2 class="sec-h2">有问题？<br>三种方式找我</h2>
+    <p class="sec-p">想订座、问酒、包场沟通——都可以。</p>
+  </div>
+  <div class="service-grid">
+    <a class="service-card" href="tel:18723308413"><div class="sc-icon">📞</div><h3>打电话</h3>
+      <p class="sc-main">187 2330 8413</p><p class="sc-sub">最快的方式，直接打</p></a>
+    <a class="service-card" href="#order"><div class="sc-icon">💬</div><h3>微信咨询</h3>
+      <p class="sc-main">加微信沟通</p><p class="sc-sub">发位置、问酒都可以</p></a>
+    <a class="service-card" href="#order"><div class="sc-icon">📝</div><h3>在线预订</h3>
+      <p class="sc-main">填表提交</p><p class="sc-sub">我会回电确认</p></a>
+  </div>
+  <div class="service-hours">
+    <span class="sh-dot"></span><b>营业时间</b>　每天 17:00 — 02:00　｜　周末建议提前预订
+  </div>
+</section>
+
+<!-- 付款方式 -->
+<section class="sec" id="payment">
+  <div class="sec-head">
+    <span class="sec-label">付 款 方 式</span>
+    <h2 class="sec-h2">四种方式<br>随你方便</h2>
+    <p class="sec-p">到店消费后付款。也可以提前付定金锁位。</p>
+  </div>
+  <div class="pay-grid">
+    <div class="pay-card">
+      <div class="pay-head"><span class="pay-icon">💚</span><b>微信支付</b></div>
+      <div class="pay-qr-wrap">
+        <img src="assets/img/pay-wechat.png" alt="微信收款码">
+        <div class="pay-ph"><span>📱</span><b>微信收款码</b><i>assets/img/pay-wechat.png</i></div>
+      </div>
+      <p class="pay-tip">扫码付款 · 微信转账</p>
+    </div>
+    <div class="pay-card">
+      <div class="pay-head"><span class="pay-icon">💙</span><b>支付宝</b></div>
+      <div class="pay-qr-wrap">
+        <img src="assets/img/pay-alipay.png" alt="支付宝收款码">
+        <div class="pay-ph"><span>📱</span><b>支付宝收款码</b><i>assets/img/pay-alipay.png</i></div>
+      </div>
+      <p class="pay-tip">扫码付款 · 支付宝转账</p>
+    </div>
+    <div class="pay-card">
+      <div class="pay-head"><span class="pay-icon">💵</span><b>现金</b></div>
+      <div class="pay-qr-wrap cash-wrap">
+        <div class="cash-icon">💵</div>
+      </div>
+      <p class="pay-tip">到店现金支付</p>
+    </div>
+    <div class="pay-card ark-card" id="arkPayCard">
+      <div class="pay-head"><span class="pay-icon">🪙</span><b>ARK 收款</b></div>
+      <div class="pay-qr-wrap">
+        <img src="assets/img/pay-ark.png" alt="ARK 收款码" id="arkQrImg">
+        <div class="pay-ph" id="arkQrPh"><span>🪙</span><b>ARK 钱包收款码</b><i>assets/img/pay-ark.png</i></div>
+      </div>
+      <p class="pay-tip">支持 ARK / USDT 等加密资产</p>
+      <div class="ark-info" id="arkInfo">
+        <div class="ark-row"><span class="ark-label">网络</span><b id="arkChain">BSC（BNB Chain）</b></div>
+        <div class="ark-row"><span class="ark-label">币种</span><b id="arkCoin">ARK</b></div>
+        <div class="ark-addr-box">
+          <div class="ark-addr-label">收款地址</div>
+          <div class="ark-addr" id="arkAddr">加载中…</div>
+          <button class="ark-copy" id="arkCopy" type="button">复制</button>
+        </div>
+        <div class="ark-rate" id="arkRate" style="display:none"><span>参考汇率</span><b id="arkRateText">—</b></div>
+      </div>
+      <p class="pay-tip ark-warn">
+        ※ 加密转账请务必核对地址与网络<br>
+        ※ 转账后请提供交易哈希（TxID）方便核对
+      </p>
+    </div>
+  </div>
+  <p class="pay-note">
+    ※ 到店消费后付款，不收服务费<br>
+    ※ 预订不收费，取消请提前 2 小时告知<br>
+    ※ 加密资产支付按付款时市价折算
+  </p>
+</section>
+
+<!-- 地图导航 -->
+<section class="sec sec-dark" id="location">
+  <div class="sec-head light">
+    <span class="sec-label">到 店 找 我</span>
+    <h2 class="sec-h2">位置在这里<br>别走错了</h2>
+    <p class="sec-p">导航过来，门口有灯牌，认准「半醉」两个字。</p>
+  </div>
+  <div class="map-grid">
+    <div class="map-info">
+      <div class="mi-row"><span class="mi-icon">📍</span><div><i>门 店 地 址</i><b id="shopAddr">请在 config.js 中填写店铺地址</b></div></div>
+      <div class="mi-row"><span class="mi-icon">📞</span><div><i>联 系 电 话</i><b><a href="tel:18723308413">187 2330 8413</a></b></div></div>
+      <div class="mi-row"><span class="mi-icon">🕐</span><div><i>营 业 时 间</i><b>每天 17:00 — 02:00</b></div></div>
+      <div class="mi-actions">
+        <a href="#" id="mapLink" target="_blank" rel="noopener" class="btn btn-gold">打开地图导航</a>
+      </div>
+    </div>
+    <div class="map-view">
+      <div class="map-static">
+        <iframe title="地图位置" id="mapFrame" src="about:blank" loading="lazy"></iframe>
+        <div class="map-fallback"><span>🗺</span><b>地图加载中…</b><i>若空白，请点左侧「打开地图导航」</i></div>
+      </div>
+      <div class="map-qr">
+        <img src="assets/img/qr_tel.png" alt="扫码拨号">
+        <div><b>扫码直接拨打</b><i>问路、订座都可以</i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 常见问题 -->
+<section class="sec" id="faq">
+  <div class="sec-head"><span class="sec-label">常 见 问 题</span><h2 class="sec-h2">你可能想问的</h2></div>
+  <div class="faq-wrap" id="faqList"></div>
+</section>
+
+<footer class="footer">
+  <div class="footer-main">
+    <div>
+      <div class="f-logo">酒 半 醉 酒 馆</div>
+      <p class="f-desc">有酒，有故事。<br>白酒 · 红酒 · 精酿 · 洋酒 · 果酒，按杯按瓶都有。</p>
+    </div>
+    <div class="f-col">
+      <b>联系</b>
+      <a href="tel:18723308413">187 2330 8413</a>
+      <span>每天 17:00 — 02:00</span>
+      <span>周末建议提前预订</span>
+    </div>
+    <div class="f-col">
+      <b>快捷</b>
+      <a href="#wines">酒品展示</a><a href="#price">价目表</a>
+      <a href="#reviews">客户好评</a><a href="#order">预订座位</a>
+      <a href="#location">到店导航</a><a href="admin.html" class="admin-link">订单后台</a>
+    </div>
+  </div>
+  <div class="f-bar">
+    <span>© 2026 半醉酒馆</span>
+    <span>未成年人禁止饮酒 · 适量饮酒 健康生活</span>
+  </div>
+</footer>
+
+<!-- 购物车 -->
+<div class="drawer-mask" id="drawerMask"></div>
+<aside class="drawer" id="cartDrawer">
+  <div class="drawer-head"><b>我的酒单</b><button class="drawer-close" id="drawerClose">✕</button></div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-foot" id="cartFoot" style="display:none">
+    <div class="cart-total"><span>合计</span><b id="cartTotal">¥0</b></div>
+    <form class="order-form" id="quickForm">
+      <input type="text" id="qcName" placeholder="你的称呼 *" required>
+      <input type="tel" id="qcPhone" placeholder="联系电话 *" required>
+      <input type="text" id="qcTime" placeholder="大概什么时候到店">
+      <button type="submit" class="btn btn-gold btn-full">提交酒单</button>
+    </form>
+  </div>
+</aside>
+
+<!-- 成功弹窗 -->
+<div class="modal-mask" id="modalMask">
+  <div class="modal">
+    <div class="modal-icon">✓</div>
+    <h3>预订已提交</h3>
+    <p class="modal-order">单号：<b id="modalOrderNo">—</b></p>
+    <p class="modal-p">我会尽快回电确认。<br>也可以直接拨打：</p>
+    <a href="tel:18723308413" class="btn btn-gold btn-full">187 2330 8413</a>
+    <button class="modal-close" id="modalClose">关闭</button>
+  </div>
+</div>
+
+<!-- 背景音乐 -->
+<div class="bgm" id="bgm">
+  <button class="bgm-toggle" id="bgmToggle" aria-label="背景音乐">
+    <span class="bgm-note">♪</span>
+    <span class="bgm-bars"><i></i><i></i><i></i><i></i></span>
+    <span class="bgm-hint" id="bgmHint">点我听</span>
+  </button>
+  <div class="bgm-panel" id="bgmPanel">
+    <div class="bgm-head"><b>店内音乐</b><button id="bgmClose" aria-label="收起">✕</button></div>
+    <div class="bgm-now">
+      <div class="bgm-disc" id="bgmDisc">♪</div>
+      <div class="bgm-meta"><b id="bgmTitle">暂无音乐</b><i id="bgmState">请把 mp3 放入 assets/audio/</i></div>
+    </div>
+    <div class="bgm-progress">
+      <span id="bgmCur">0:00</span>
+      <div class="bgm-bar" id="bgmBar"><i id="bgmFill"></i></div>
+      <span id="bgmDur">0:00</span>
+    </div>
+    <div class="bgm-ctrl">
+      <button id="bgmPrev" aria-label="上一首">⏮</button>
+      <button id="bgmPlay" class="bgm-play" aria-label="播放">▶</button>
+      <button id="bgmNext" aria-label="下一首">⏭</button>
+    </div>
+    <div class="bgm-vol"><span>🔉</span><input type="range" id="bgmVol" min="0" max="100" value="40" aria-label="音量"></div>
+    <div class="bgm-list" id="bgmList"></div>
+  </div>
+  <audio id="bgmAudio" preload="none"></audio>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

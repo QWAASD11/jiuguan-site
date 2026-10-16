@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>订单后台 · 半醉酒馆</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--dark:#1a0f0a;--dark2:#2a1810;--amber:#c8873f;--amber-l:#e0a95c;--amber-d:#a06a2c;--warm:#fbf8f3;--cream:#f4eee5;--grey:#8a7d72;--line:rgba(200,135,63,.24)}
+body{font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;background:var(--cream);color:#2b1a12;line-height:1.7}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select{font-family:inherit;font-size:14px}
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(140deg,#1a0f0a,#2a1810,#3a2418);padding:24px}
+.login-box{background:var(--warm);border-radius:8px;padding:48px 42px;width:min(400px,100%);box-shadow:0 24px 70px rgba(0,0,0,.45);text-align:center}
+.login-mark{width:64px;height:64px;background:linear-gradient(135deg,var(--amber),var(--amber-d));color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-family:'Noto Serif SC',serif;font-size:30px;font-weight:900}
+.login-box h1{font-size:23px;color:var(--dark);margin-bottom:8px;font-weight:800}
+.login-box p{font-size:13px;color:var(--grey);margin-bottom:30px}
+.login-box input{width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:5px;outline:none;background:#fff;text-align:center;font-size:15px;letter-spacing:.3em}
+.login-box input:focus{border-color:var(--amber)}
+.login-box button{width:100%;margin-top:16px;padding:14px;background:var(--dark);color:#fff;border-radius:5px;font-size:15px;font-weight:600;transition:.26s}
+.login-box button:hover{background:var(--amber)}
+.login-err{color:#c0392b;font-size:13px;margin-top:14px;min-height:20px}
+.login-tip{margin-top:26px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--grey);line-height:1.9;text-align:left}
+.login-tip code{background:rgba(200,135,63,.13);padding:2px 7px;border-radius:3px;color:var(--amber-d)}
+.admin{display:none}.admin.on{display:block}
+.topbar{background:var(--dark);color:#fff;padding:0 6vw;height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px;position:sticky;top:0;z-index:100}
+.tb-left{display:flex;align-items:center;gap:14px}
+.tb-mark{width:38px;height:38px;background:linear-gradient(135deg,var(--amber),var(--amber-d));border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif SC',serif;font-size:19px;font-weight:900}
+.tb-left b{font-size:17px;font-weight:700}
+.tb-left i{font-style:normal;font-size:11.5px;color:rgba(255,255,255,.5);display:block}
+.tb-right{display:flex;gap:10px;flex-wrap:wrap}
+.tb-btn{padding:9px 18px;border-radius:5px;font-size:13.5px;font-weight:600;color:#fff;border:1px solid rgba(255,255,255,.3);transition:.24s}
+.tb-btn:hover{background:rgba(255,255,255,.12)}
+.tb-btn.gold{background:linear-gradient(135deg,var(--amber),var(--amber-d));border-color:transparent}
+.wrap{max-width:1500px;margin:0 auto;padding:34px 6vw 80px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-bottom:30px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:8px;padding:24px;position:relative;overflow:hidden}
+.stat::after{content:'';position:absolute;right:-24px;top:-24px;width:80px;height:80px;border:1px solid rgba(200,135,63,.14);border-radius:50%}
+.stat i{font-style:normal;font-size:12px;color:var(--grey);letter-spacing:.16em;display:block;margin-bottom:10px;font-weight:600}
+.stat b{font-size:32px;font-weight:900;color:var(--dark);display:block;line-height:1.15}
+.stat b em{font-style:normal;font-size:15px;color:var(--amber-d);margin-left:3px}
+.stat small{font-size:12px;color:#a89880;display:block;margin-top:8px}
+.toolbar{background:#fff;border:1px solid var(--line);border-radius:8px;padding:18px 22px;margin-bottom:20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.toolbar input,.toolbar select{padding:10px 14px;border:1px solid var(--line);border-radius:5px;outline:none;background:var(--warm);min-width:150px}
+.toolbar input:focus,.toolbar select:focus{border-color:var(--amber);background:#fff}
+.toolbar input.search{flex:1;min-width:220px}
+.spacer{flex:1}
+.tbtn{padding:10px 20px;border-radius:5px;font-size:13.5px;font-weight:600;transition:.24s}
+.tbtn.ghost{border:1px solid var(--line);color:#6a5f55;background:#fff}
+.tbtn.ghost:hover{border-color:var(--amber);color:var(--amber-d)}
+.table-card{background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+thead th{background:var(--dark);color:#fff;text-align:left;padding:15px 16px;font-size:12.5px;font-weight:700;white-space:nowrap}
+tbody td{padding:15px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:rgba(200,135,63,.04)}
+.order-no{font-family:ui-monospace,monospace;font-size:12.5px;color:var(--amber-d);font-weight:700}
+.cust-name{font-weight:700;color:var(--dark)}
+.cust-sub{font-size:12px;color:var(--grey);display:block;margin-top:3px}
+.tag{display:inline-block;background:rgba(200,135,63,.14);color:var(--amber-d);font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px;margin-bottom:5px}
+.sub-line{font-size:12.5px;color:#6a5f55}
+.amount{font-size:17px;font-weight:900;color:var(--amber-d);white-space:nowrap}
+.status-pill{display:inline-block;padding:5px 13px;border-radius:12px;font-size:12px;font-weight:700;white-space:nowrap}
+.st-wait{background:rgba(200,135,63,.15);color:var(--amber-d)}
+.st-doing{background:rgba(52,120,200,.14);color:#2c6aa8}
+.st-done{background:rgba(74,138,92,.15);color:#3a7550}
+.st-cancel{background:rgba(150,150,150,.16);color:#787878}
+.row-acts{display:flex;gap:6px;flex-wrap:wrap}
+.mini{padding:6px 11px;border-radius:4px;font-size:12px;font-weight:600;border:1px solid var(--line);color:#6a5f55;background:#fff;transition:.22s;white-space:nowrap}
+.mini:hover{border-color:var(--amber);color:var(--amber-d)}
+.mini.del:hover{border-color:#c0392b;color:#c0392b}
+.empty{padding:80px 30px;text-align:center;color:var(--grey)}
+.empty span{font-size:52px;display:block;margin-bottom:18px;opacity:.4}
+.empty b{display:block;font-size:16px;color:var(--dark);margin-bottom:10px}
+.detail-row td{background:var(--warm);padding:0 !important}
+.detail-inner{padding:24px 28px;font-size:13px;color:#5a5048;line-height:2}
+.detail-inner b{color:var(--dark)}
+.detail-block{background:#fff;border:1px solid var(--line);border-radius:5px;padding:16px 18px;margin-top:12px}
+.detail-block h4{font-size:13px;color:var(--amber-d);margin-bottom:9px;font-weight:700}
+.note-box{white-space:pre-wrap;font-size:13px;line-height:2;color:#4a4438}
+.foot-note{margin-top:26px;padding-top:22px;border-top:1px solid var(--line);font-size:12.5px;color:var(--grey);line-height:2}
+.foot-note code{background:rgba(200,135,63,.13);padding:2px 7px;border-radius:3px;color:var(--amber-d)}
+@media (max-width:900px){
+  .topbar{padding:14px 4vw;height:auto;flex-direction:column;align-items:stretch;gap:12px}
+  .wrap{padding:24px 4vw 60px}
+  .table-card{overflow-x:auto}
+  table{min-width:1000px}
+}
+</style>
+</head>
+<body>
+
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div class="login-mark">酒</div>
+    <h1>订单后台</h1>
+    <p>半醉酒馆 · 预订管理</p>
+    <input type="password" id="pwd" placeholder="请输入管理密码">
+    <button id="loginBtn">进 入 后 台</button>
+    <div class="login-err" id="loginErr"></div>
+    <div class="login-tip">
+      <b>初始密码</b>：<code>jiu2026</code><br>
+      修改：打开 <code>admin.html</code>，找到 <code>PASSWORD</code> 改掉。<br>
+      <span style="color:#a89880">订单数据存在本机浏览器，换设备或清缓存会看不到，重要订单请导出备份。</span>
+    </div>
+  </div>
+</div>
+
+<div class="admin" id="admin">
+  <div class="topbar">
+    <div class="tb-left">
+      <div class="tb-mark">酒</div>
+      <div><b>订单后台</b><i>半醉酒馆 · 预订管理</i></div>
+    </div>
+    <div class="tb-right">
+      <button class="tb-btn" id="toSite">返回网站</button>
+      <button class="tb-btn" id="demoBtn">生成测试单</button>
+      <button class="tb-btn gold" id="exportBtn">导出 Excel</button>
+      <button class="tb-btn" id="logoutBtn">退出</button>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="stats" id="stats"></div>
+    <div class="toolbar">
+      <input type="text" class="search" id="searchInput" placeholder="搜索单号 / 客户 / 电话 / 日期…">
+      <select id="statusFilter">
+        <option value="">全部状态</option>
+        <option value="待跟进">待跟进</option>
+        <option value="已确认">已确认</option>
+        <option value="已到店">已到店</option>
+        <option value="已取消">已取消</option>
+      </select>
+      <select id="typeFilter"><option value="">全部类型</option></select>
+      <div class="spacer"></div>
+      <button class="tbtn ghost" id="refreshBtn">刷新</button>
+      <button class="tbtn ghost" id="clearBtn">清空全部</button>
+    </div>
+    <div class="table-card">
+      <table>
+        <thead><tr>
+          <th>单号</th><th>提交时间</th><th>客户</th><th>预订内容</th><th>金额</th><th>状态</th><th>操作</th>
+        </tr></thead>
+        <tbody id="orderBody"></tbody>
+      </table>
+      <div class="empty" id="emptyState">
+        <span>🍶</span><b>还没有订单</b>
+        <p>客户在预订页提交后，会显示在这里<br>也可以点右上角「生成测试单」看看效果</p>
+      </div>
+    </div>
+    <div class="foot-note">
+      <b>使用说明</b><br>
+      · 订单数据存在本机浏览器，换设备或清缓存会看不到，重要订单请导出备份。<br>
+      · 点「导出 Excel」下载 CSV，可直接用 Excel / WPS 打开。<br>
+      · 状态流转：待跟进 → 已确认 → 已到店。<br>
+      · 点「详情」可以看到客户填的完整预订信息。<br>
+      · 修改密码：编辑 <code>admin.html</code>，找到 <code>var PASSWORD = 'jiu2026';</code>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var PASSWORD='jiu2026', ORDER_KEY='jiuguan_orders_v1', AUTH_KEY='jiuguan_admin_auth';
+  function $(s){ return document.querySelector(s); }
+  function money(n){ return '¥'+Number(n).toLocaleString('zh-CN'); }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function load(k,d){ try{ var v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } }
+  function save(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+  var orders=load(ORDER_KEY,[]), expanded={};
+
+  function doLogin(){
+    if($('#pwd').value.trim()===PASSWORD){ sessionStorage.setItem(AUTH_KEY,'1'); showAdmin(); $('#loginErr').textContent=''; }
+    else { $('#loginErr').textContent='密码不对，请重新输入'; $('#pwd').value=''; }
+  }
+  $('#loginBtn').addEventListener('click',doLogin);
+  $('#pwd').addEventListener('keydown',function(e){ if(e.key==='Enter') doLogin(); });
+  function showAdmin(){ $('#loginWrap').style.display='none'; $('#admin').classList.add('on'); render(); }
+  if(sessionStorage.getItem(AUTH_KEY)==='1') showAdmin();
+  $('#logoutBtn').addEventListener('click',function(){ sessionStorage.removeItem(AUTH_KEY); location.reload(); });
+  $('#toSite').addEventListener('click',function(){ location.href='index.html'; });
+  function ymd(d){ var p=function(n){ return n<10?'0'+n:n; }; return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); }
+
+  function renderStats(){
+    var all=orders.length;
+    var valid=orders.filter(function(o){ return o.status!=='已取消'; });
+    var total=valid.reduce(function(s,o){ return s+(o.total||0); },0);
+    var today=orders.filter(function(o){ return o.time&&ymd(new Date(o.time))===ymd(new Date()); });
+    var pending=orders.filter(function(o){ return o.status==='待跟进'||o.status==='已确认'; }).length;
+    var people=valid.reduce(function(s,o){ return s + (o.people?parseInt(o.people,10)||0:0); },0);
+    function card(l,v,suf,small){ return '<div class="stat"><i>'+l+'</i><b>'+v+(suf||'')+'</b><small>'+small+'</small></div>'; }
+    $('#stats').innerHTML = card('预订总数',all,'<em>单</em>','含全部状态')+
+      card('预选金额',money(total),'','不含已取消')+
+      card('今日提交',today.length,'<em>单</em>',ymd(new Date()))+
+      card('待处理',pending,'<em>单</em>','待跟进 + 已确认')+
+      card('预计人数',people,'<em>位</em>','按填写的位数估算');
+  }
+  function getFiltered(){
+    var kw=$('#searchInput').value.trim().toLowerCase(), st=$('#statusFilter').value, tp=$('#typeFilter').value;
+    return orders.filter(function(o){
+      if(st&&o.status!==st) return false;
+      if(tp&&o.type!==tp) return false;
+      if(kw){ var blob=[o.no,o.name,o.phone,o.visitDate,o.visitTime,o.wine,o.note].join(' ').toLowerCase();
+        if(blob.indexOf(kw)===-1) return false; }
+      return true;
+    });
+  }
+  function fillTypeFilter(){
+    var t={}; orders.forEach(function(o){ if(o.type) t[o.type]=1; });
+    var sel=$('#typeFilter'), cur=sel.value;
+    sel.innerHTML='<option value="">全部类型</option>'+Object.keys(t).map(function(x){
+      return '<option value="'+esc(x)+'">'+esc(x)+'</option>'; }).join('');
+    sel.value=cur;
+  }
+  var SC={'待跟进':'st-wait','已确认':'st-doing','已到店':'st-done','已取消':'st-cancel'};
+  function render(){
+    fillTypeFilter(); renderStats();
+    var list=getFiltered(), body=$('#orderBody');
+    if(!list.length){ body.innerHTML=''; $('#emptyState').style.display='block'; return; }
+    $('#emptyState').style.display='none';
+    body.innerHTML=list.map(function(o){
+      var idx=orders.indexOf(o);
+      var content = o.visitDate
+        ? '<span class="tag">'+esc(o.people||'')+'</span><br><span class="sub-line">'+esc(o.visitDate)+' '+esc(o.visitTime||'')+'</span>'
+        : '<span class="sub-line">'+esc((o.items&&o.items[0]?o.items[0].name:'酒单预选'))+'</span>';
+      var row='<tr><td><span class="order-no">'+esc(o.no)+'</span></td>'+
+        '<td style="white-space:nowrap;font-size:12.5px;color:#8a7d72">'+esc(o.timeText||'')+'</td>'+
+        '<td><span class="cust-name">'+esc(o.name)+'</span><span class="cust-sub">'+esc(o.phone)+'</span></td>'+
+        '<td>'+content+'</td>'+
+        '<td><span class="amount">'+money(o.total)+'</span></td>'+
+        '<td><span class="status-pill '+(SC[o.status]||'st-wait')+'">'+esc(o.status)+'</span></td>'+
+        '<td><div class="row-acts">'+
+          '<button class="mini" data-act="detail" data-i="'+idx+'">详情</button>'+
+          '<button class="mini" data-act="next" data-i="'+idx+'">下一状态</button>'+
+          '<button class="mini del" data-act="del" data-i="'+idx+'">删除</button>'+
+        '</div></td></tr>';
+      if(expanded[o.no]){
+        var det='<tr class="detail-row"><td colspan="7"><div class="detail-inner"><b>订单详情 · '+esc(o.no)+'</b>';
+        if(o.visitDate){
+          det+='<div class="detail-block"><h4>预订信息</h4>'+
+            '<div>客户：<b>'+esc(o.name)+'</b>　电话：<b>'+esc(o.phone)+'</b></div>'+
+            '<div>到店日期：<b>'+esc(o.visitDate)+'</b>　时间：<b>'+esc(o.visitTime||'')+'</b></div>'+
+            '<div>人数：<b>'+esc(o.people||'')+'</b></div>'+
+            '<div>想要酒水：'+esc(o.wine||'不限')+'</div></div>';
+          if(o.note) det+='<div class="detail-block"><h4>客户备注</h4><div class="note-box">'+esc(o.note)+'</div></div>';
+        } else if(o.items){
+          det+='<div class="detail-block"><h4>预选酒单</h4>'+
+            o.items.map(function(i){ return esc(i.name)+'　'+money(i.price)+' × '+i.qty+' = '+money(i.sum); }).join('<br>')+
+            (o.arrive?'<div style="margin-top:10px">预计到店：'+esc(o.arrive)+'</div>':'')+'</div>';
+        }
+        det+='</div></td></tr>';
+        row+=det;
+      }
+      return row;
+    }).join('');
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('[data-act]'); if(!b) return;
+    var i=parseInt(b.getAttribute('data-i'),10), act=b.getAttribute('data-act');
+    var o=orders[i]; if(!o) return;
+    if(act==='detail'){ expanded[o.no]=!expanded[o.no]; render(); }
+    else if(act==='next'){
+      var flow=['待跟进','已确认','已到店'], p=flow.indexOf(o.status);
+      o.status=(p===-1||p===flow.length-1)?'待跟进':flow[p+1];
+      save(ORDER_KEY,orders); render();
+    } else if(act==='del'){
+      if(confirm('确定删除订单 '+o.no+'？不可恢复。')){ orders.splice(i,1); save(ORDER_KEY,orders); render(); }
+    }
+  });
+  ['#searchInput','#statusFilter','#typeFilter'].forEach(function(s){
+    $(s).addEventListener('input',render); $(s).addEventListener('change',render);
+  });
+  $('#refreshBtn').addEventListener('click',function(){ orders=load(ORDER_KEY,[]); render(); });
+  $('#clearBtn').addEventListener('click',function(){
+    if(!orders.length) return;
+    if(confirm('确定清空全部 '+orders.length+' 条订单？\n\n建议先导出备份。')){ orders=[]; save(ORDER_KEY,orders); render(); }
+  });
+  $('#exportBtn').addEventListener('click',function(){
+    if(!orders.length){ alert('还没有订单可导出'); return; }
+    var rows=[['单号','提交时间','客户','电话','到店日期','到店时间','人数','想要酒水','备注','预选酒单','金额','状态']];
+    orders.forEach(function(o){
+      rows.push([o.no,o.timeText||'',o.name,o.phone,o.visitDate||'',o.visitTime||'',o.people||'',
+        o.wine||'',o.note||'',(o.items||[]).map(function(i){ return i.name+'×'+i.qty; }).join(' | '),
+        o.total,o.status]);
+    });
+    var csv=rows.map(function(r){ return r.map(function(c){ return '"'+String(c==null?'':c).replace(/"/g,'""')+'"'; }).join(','); }).join('\r\n');
+    var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+    var url=URL.createObjectURL(blob), a=document.createElement('a');
+    a.href=url; a.download='半醉酒馆订单_'+ymd(new Date())+'.csv';
+    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  });
+  $('#demoBtn').addEventListener('click',function(){
+    var names=['张先生','李女士','王同学','刘先生','陈小姐'];
+    var phones=['13800001111','13900002222','15800003333','18600004444','17700005555'];
+    var times=['19:00','20:00','21:00','22:00','23:00'];
+    var peos=['2 人','3-4 人','5-8 人','1 人','8 人以上（包场）'];
+    var wines=['白酒','红酒','精酿啤酒','洋酒','果酒米酒','不限（听店员推荐）'];
+    var notes=['要靠窗的位置','有人生日，想准备一下','想喝精酿推荐','需要无酒精饮品',''];
+    var n=Math.floor(Math.random()*names.length);
+    var now=new Date(), p=function(x){ return x<10?'0'+x:''+x; };
+    var vd=new Date(now.getTime()+86400000*(1+Math.floor(Math.random()*5)));
+    orders.unshift({ no:'JG'+now.getFullYear()+p(now.getMonth()+1)+p(now.getDate())+p(now.getHours())+p(now.getMinutes())+p(now.getSeconds()),
+      type:'座位预订', time:now.toISOString(), timeText:ymd(now)+' '+p(now.getHours())+':'+p(now.getMinutes()),
+      name:names[n], phone:phones[n], visitDate:ymd(vd), visitTime:times[Math.floor(Math.random()*times.length)],
+      people:peos[Math.floor(Math.random()*peos.length)], wine:wines[Math.floor(Math.random()*wines.length)],
+      note:notes[Math.floor(Math.random()*notes.length)], total:Math.floor(Math.random()*8+2)*30, status:'待跟进' });
+    save(ORDER_KEY,orders); render();
+  });
+  window.addEventListener('focus',function(){ orders=load(ORDER_KEY,[]); if($('#admin').classList.contains('on')) render(); });
+})();
+</script>
+</body>
+</html>
